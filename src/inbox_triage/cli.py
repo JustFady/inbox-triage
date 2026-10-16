@@ -15,8 +15,10 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--config", type=Path, default=Path("triage.yaml"))
     p.add_argument("--llm", choices=["rule", "anthropic"], default=None, help="default: anthropic if ANTHROPIC_API_KEY is set, else rule")
     sub = p.add_subparsers(dest="cmd", required=True)
-    r = sub.add_parser("run", help="triage a folder of .eml files (or one .mbox)")
-    r.add_argument("source", type=Path)
+    r = sub.add_parser("run", help="triage a folder of .eml files, one .mbox, or an IMAP mailbox (imap://user%40host@imap.host/INBOX)")
+    r.add_argument("source")
+    r.add_argument("--limit", type=int, default=50, help="IMAP only: newest N unseen messages")
+    r.add_argument("--all", action="store_true", help="IMAP only: include already-read messages")
     r.add_argument("--out", type=Path, default=Path("out"))
     e = sub.add_parser("eval", help="score the classifier against labels.csv (email_id,category)")
     e.add_argument("source", type=Path)
@@ -30,7 +32,12 @@ def main(argv: list[str] | None = None) -> int:
     cfg = load_config(args.config)
     llm = get_llm(args.llm)
     if args.cmd == "run":
-        emails = load_emails(args.source)
+        if str(args.source).startswith("imap"):
+            from .imap_source import fetch_emails
+
+            emails = fetch_emails(str(args.source), limit=args.limit, unseen_only=not args.all)
+        else:
+            emails = load_emails(Path(args.source))
         results = triage(emails, cfg, llm)
         _, md = write_queue(results, args.out)
         append_log(results, args.out / "log.csv")

@@ -19,7 +19,7 @@ support                     100%    100%    1
 
 ## What it does
 
-1. **Load** `.eml` files from a folder (or one `.mbox`).
+1. **Load** `.eml` files from a folder, one `.mbox`, or an IMAP mailbox read-only (`imap://you%40gmail.com@imap.gmail.com/INBOX` with `IMAP_PASSWORD` set to an app password; messages are peeked, never marked read, moved or deleted).
 2. **Classify** each email into your categories (`triage.yaml`), with a confidence and a one-line reason.
 3. **Decide**: per category, `draft` a reply, `route` to a mailbox, or `ignore`. Anything under `min_confidence` is routed to a human, never auto-handled.
 4. **Draft** replies that match your voice guide and past examples; the model is told to leave `[brackets]` where a human must fill in facts, prices or dates.
