@@ -36,7 +36,7 @@ class RuleLLM:
     def draft(self, email: Email, category: str, voice: str, examples: list[str]) -> str:
         first = email.sender.split("<")[0].strip().split(" ")[0] or "there"
         return (f"Hi {first},\n\nThanks for your note about \"{email.subject}\". "
-                f"[{category}] We'll follow up with details shortly.\n\n{voice.splitlines()[0] if voice else 'Best'}")
+                f"[{category}: fill in the specifics before sending] We'll follow up with details shortly.\n\nBest,\n[Your name]")
 
 
 class AnthropicLLM:
