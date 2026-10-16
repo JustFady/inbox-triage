@@ -1,0 +1,24 @@
+# Copy to triage.yaml and edit. Anything omitted falls back to the built-in defaults.
+categories:
+  sales_inquiry: someone asking about pricing, a quote, a demo, or whether you offer a service
+  support: an existing customer reporting a problem, bug, outage, or asking how to do something
+  billing: invoices, payments, refunds, receipts, card or subscription questions
+  scheduling: booking, rescheduling, or confirming a meeting or call
+  newsletter_or_spam: marketing, newsletters, cold outreach, notifications nobody needs to answer
+actions:
+  sales_inquiry: {action: draft}
+  support: {action: draft}
+  billing: {action: route, route_to: billing@yourcompany.com}
+  scheduling: {action: draft}
+  newsletter_or_spam: {action: ignore}
+  other: {action: route, route_to: you@yourcompany.com}
+min_confidence: 0.6
+voice: |
+  Warm, direct, two short paragraphs max. Never promise dates or prices; leave [brackets] for me to fill in.
+  Sign off with "Best,\nFady".
+examples:
+  - |
+    Hi Sam, thanks for reaching out. Yes, we do exactly that — I'd love to see one of your forms to scope it properly.
+    Could you send a sample and a good time for a 20-minute call this week?
+    Best,
+    Fady

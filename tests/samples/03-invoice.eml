@@ -1,0 +1,8 @@
+From: accounts@brightline.example
+To: billing@yourcompany.example
+Subject: Invoice INV-2201 payment and receipt
+Date: Mon, 13 Oct 2026 11:05:00 -0500
+Content-Type: text/plain; charset="utf-8"
+
+We paid invoice INV-2201 last week by card but have not received a receipt. Can you resend it,
+and confirm the subscription renews in November?

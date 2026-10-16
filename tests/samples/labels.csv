@@ -1,0 +1,6 @@
+email_id,category
+01-quote,sales_inquiry
+02-bug,support
+03-invoice,billing
+04-meeting,scheduling
+05-newsletter,newsletter_or_spam

@@ -1,0 +1,8 @@
+From: Marcus Lee <marcus@ferrotech.example>
+To: support@yourcompany.example
+Subject: Export is broken since this morning
+Date: Mon, 13 Oct 2026 10:40:00 -0500
+Content-Type: text/plain; charset="utf-8"
+
+The CSV export fails with a 500 error on every report. This is a problem for our month-end.
+How do we get it working again? We are an existing customer on the Team plan.
