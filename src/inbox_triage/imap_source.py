@@ -46,15 +46,16 @@ def fetch_emails(url: str, password: str | None = None, limit: int = 50, unseen_
         conn.login(cfg["user"], password)
         conn.select(cfg["mailbox"], readonly=True)
         status, data = conn.search(None, "UNSEEN" if unseen_only else "ALL")
-        if status != "OK":
+        if status != "OK" or not data:
             raise RuntimeError(f"IMAP search failed: {status}")
-        ids = data[0].split()[-limit:] if data and data[0] else []
+        first = data[0] or b""
+        ids = first.split()[-limit:] if first else []
         out: list[Email] = []
         for uid in ids:
             status, parts = conn.fetch(uid.decode() if isinstance(uid, bytes) else uid, "(BODY.PEEK[])")
             if status != "OK" or not parts:
                 continue
-            raw = next((p[1] for p in parts if isinstance(p, tuple) and len(p) > 1), None)
+            raw = next((p[1] for p in (parts or []) if isinstance(p, tuple) and len(p) > 1), None)
             if raw is None:
                 continue
             msg = email_lib.message_from_bytes(raw, policy=policy.default)
